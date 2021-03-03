@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Icon\ADD.png" />
+    <None Remove="Icon\AddFriend.png" />
+    <None Remove="Icon\Clear.png" />
+    <None Remove="Icon\Close.png" />
+    <None Remove="Icon\DownArrow.png" />
+    <None Remove="Icon\Friend.png" />
+    <None Remove="Icon\Gear_Setting.png" />
+    <None Remove="Icon\HeadImg.jpg" />
+    <None Remove="Icon\img.png" />
+    <None Remove="Icon\KeyBoard.png" />
+    <None Remove="Icon\Lock.png" />
+    <None Remove="Icon\MagnifierGray.png" />
+    <None Remove="Icon\MagnifierWhite.png" />
+    <None Remove="Icon\Max.png" />
+    <None Remove="Icon\MaxBack.png" />
+    <None Remove="Icon\Min.png" />
+    <None Remove="Icon\Penguin.png" />
+    <None Remove="Icon\PenguinQQ.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Themes\MainResource.xaml" />
+    <Page Remove="Themes\QQStyleResource.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icon\ADD.png" />
+    <Resource Include="Icon\AddFriend.png" />
+    <Resource Include="Icon\Friend.png" />
+    <Resource Include="Icon\img.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icon\Clear.png" />
+    <Resource Include="Icon\MagnifierWhite.png" />
+    <Resource Include="Icon\MagnifierGray.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChatHot.Model\ChatHot.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icon\Close.png" />
+    <Resource Include="Icon\DownArrow.png" />
+    <Resource Include="Icon\Gear_Setting.png" />
+    <Resource Include="Icon\HeadImg.jpg" />
+    <Resource Include="Icon\KeyBoard.png" />
+    <Resource Include="Icon\Lock.png" />
+    <Resource Include="Icon\Max.png" />
+    <Resource Include="Icon\MaxBack.png" />
+    <Resource Include="Icon\Min.png" />
+    <Resource Include="Icon\Penguin.png" />
+    <Resource Include="Icon\PenguinQQ.png" />
+    <Resource Include="Themes\MainResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Themes\QQStyleResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+
+</Project>

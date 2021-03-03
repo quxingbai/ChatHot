@@ -1,0 +1,443 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:f="clr-namespace:ChatHot.ControlLib.Form;assembly=ChatHot.ControlLib"
+                    xmlns:c="clr-namespace:ChatHot.ControlLib.UI;assembly=ChatHot.ControlLib"
+                    xmlns:cv="clr-namespace:ChatHot.ControlLib.Converters;assembly=ChatHot.ControlLib"
+                    xmlns:mm="clr-namespace:ChatHot.Model.EFModels.ChatHotDB;assembly=ChatHot.Model"    
+
+                    xmlns:local="clr-namespace:ChatHot.ControlLib.Themes">
+    <cv:NumberDivisionConverter x:Key="DivisionConverter"/>
+    <cv:MessageModelToObjectContentConverter x:Key="MessageModelConverter"/>
+
+    <Style TargetType="TabItem">
+        <Style.Resources>
+            <SolidColorBrush x:Key="TabItem.IsSelected.Foreground" Color="#FF12B7F5" />
+            <SolidColorBrush x:Key="TabItem.Static.Foreground" Color="Gray" />
+            <SolidColorBrush x:Key="TabItem.IsMouseOver.Foreground" Color="Black" />
+        </Style.Resources>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderThickness" Value="0,0,0,0.5"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Border  Name="BD_HeaderBorder">
+                                <Label x:Name="LB_Header" Content="{TemplateBinding Header}" MinWidth="10" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource TabItem.Static.Foreground}"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="LB_Header" Property="Foreground" Value="{DynamicResource TabItem.IsSelected.Foreground}"/>
+                            <Setter TargetName="BD_HeaderBorder" Property="BorderBrush" Value="{DynamicResource TabItem.IsSelected.Foreground}"/>
+                            <Setter TargetName="BD_HeaderBorder" Property="BorderThickness" Value="0,0,0,2.5"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsSelected" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="LB_Header" Property="Label.Foreground" Value="{StaticResource TabItem.IsMouseOver.Foreground}"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="TabControl" x:Key="TAB_UserInfo">
+        <Style.Resources>
+            <SolidColorBrush x:Key="TabItem.IsSelected.Foreground" Color="#19000000" />
+            <SolidColorBrush x:Key="TabItem.IsSelected.LeftBorderBrush" Color="#FF12B7F5" />
+            <SolidColorBrush x:Key="TabItem.Static.Foreground" Color="Black" />
+            <SolidColorBrush x:Key="TabItem.IsMouseOver.Foreground" Color="#19000000" />
+        </Style.Resources>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderThickness" Value="0.4,0,0,0"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="TabItem">
+                    <Setter Property="Width" Value="250"/>
+                    <Setter Property="Margin" Value="-4,-4,0,0"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                    <Setter Property="Background" Value="#02000000"/>
+                    <Setter Property="Height" Value="60"/>
+                    <Setter Property="ToolTip" Value="{Binding UloginNumber}"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+                    <Setter Property="Content">
+                        <Setter.Value>
+                            <c:ChatTextBox UserTo="{Binding RelativeSource={RelativeSource AncestorType=TabControl,Mode=FindAncestor},Path=SelectedItem}"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}">
+                                    <Border BorderThickness="3.5,0,0,0" x:Name="BD_SelectedBorder" BorderBrush="{x:Null}">
+                                        <Grid Margin="20,0,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid>
+                                                <Ellipse Width="41" Height="41" Stroke="White" StrokeThickness="0.5" >
+                                                    <Ellipse.Fill>
+                                                        <VisualBrush>
+                                                            <VisualBrush.Visual>
+                                                                <Image Name="IMAGE_UserImage" Source="{Binding UheadImage}" Width="50" Height="50"/>
+                                                            </VisualBrush.Visual>
+                                                        </VisualBrush>
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Grid>
+                                                    <TextBlock Text="{Binding Uname}"/>
+                                                </Grid>
+                                                <Grid Grid.Row="1">
+                                                    <TextBlock Text="{Binding Utag}"/>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource TabItem.IsMouseOver.Foreground}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource TabItem.IsSelected.Foreground}"/>
+                                        <Setter TargetName="BD_SelectedBorder" Property="BorderBrush" Value="{DynamicResource TabItem.IsSelected.LeftBorderBrush}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="ListBox" x:Key="LISTBOX_UserList">
+        <Style.Resources>
+            <SolidColorBrush x:Key="IsSelected.Background" Color="#19000000"/>
+        </Style.Resources>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                    <Setter Property="Background" Value="#02000000"/>
+                    <Setter Property="Height" Value="60"/>
+                    <Setter Property="ToolTip" Value="{Binding UloginNumber}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid>
+                                            <Ellipse Width="41" Height="41" Stroke="White" StrokeThickness="0.5" >
+                                                <Ellipse.Fill>
+                                                    <VisualBrush>
+                                                        <VisualBrush.Visual>
+                                                            <Image Name="IMAGE_UserImage" Source="{Binding UheadImage}" Width="50" Height="50"/>
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                        </Grid>
+                                        <Grid Grid.Column="1" Margin="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid>
+                                                <TextBlock Text="{Binding Uname}"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <TextBlock Text="{Binding Utag}"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource IsSelected.Background}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource IsSelected.Background}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="ListBox" x:Key="LISTBOX_MessageList">
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="BorderBrush" Value="Gray"/>
+                    <Setter Property="BorderThickness" Value="0.5"/>
+                    <Setter Property="Margin" Value="15"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}">
+                                    <Grid>
+                                        <ContentControl Content="{TemplateBinding Content, Converter={StaticResource MessageModelConverter},ConverterParameter={x:Null}}" />
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="ListBox" x:Key="LISTBOX_IconText">
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem" >
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border MinWidth="15" MinHeight="15">
+                                            <Image Source="{Binding Icon}" />
+                                        </Border>
+                                        <ContentControl Content="{TemplateBinding Content}" Grid.Column="1"/>
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="ListBox" >
+        <Style.Resources>
+            <SolidColorBrush x:Key="IsSelected.Background" Color="#19000000"/>
+        </Style.Resources>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem" >
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}">
+                                    <Grid>
+                                        <ContentControl FontSize="{TemplateBinding FontSize}" Content="{TemplateBinding Content}"/>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource IsSelected.Background}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource IsSelected.Background}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="ContextMenu">
+        <Style.Resources>
+            <SolidColorBrush Color="#D8FFFFFF" x:Key="Menu.Static.Background"/>
+            <SolidColorBrush Color="#10000000" x:Key="MenuItem.IsMouseOver.Background"/>
+            <SolidColorBrush Color="Black" x:Key="MenuItem.Static.Foregroudn"/>
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource Menu.Static.Background}"/>
+        <Setter Property="Width" Value="180"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContextMenu">
+                    <Border Margin="5" >
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" Opacity="0.2" Color="Black" Direction="0" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="2.7">
+                            <Grid Margin="0,7,0,7">
+                                <ItemsPresenter/>
+                            </Grid>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="MenuItem">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="MenuItem">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}"
+                                        Padding="0,5,0,5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" MinWidth="20"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Margin="8,0,8,0" Width="20" Height="20" Source="{TemplateBinding Icon}"/>
+                                        <ContentPresenter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Header}"/>
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource MenuItem.IsMouseOver.Background}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="GroupBox">
+        <Setter Property="BorderThickness" Value="0,0,0,0.2"/>
+        <Setter Property="Margin" Value="0,5,0,0"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GroupBox">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                            <ContentControl FontWeight="Bold"  Content="{TemplateBinding Header}" Margin="0,0,0,10"/>
+                        </Border>
+                        <Grid Grid.Row="1" Margin="0,15,0,0">
+                            <ContentPresenter/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="Button" x:Key="BT_NoStyleButton">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ContentControl" x:Key="MESSAGE_Style_ContentStyle_1">
+        <Style.Resources>
+            <SolidColorBrush Color="#FF12B7F5" x:Key="MESSAGE.Static.Background"/>
+            <SolidColorBrush Color="White" x:Key="MESSAGE.Static.Foreground"/>
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MESSAGE.Static.Background}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MESSAGE.Static.Foreground}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                        <ContentControl MaxWidth="{TemplateBinding MaxWidth}" Content="{TemplateBinding Content}"  Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ContentControl.Style>
+                                <Style TargetType="ContentControl">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ContentControl">
+                                                <ContentControl Content="{TemplateBinding Content}" ToolTip="{TemplateBinding Content}"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Msg.MessageType}" Value="Image">
+                                            <Setter Property="MaxWidth" Value="{Binding MaxWidth,Converter={StaticResource DivisionConverter},ConverterParameter=1.5}"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ContentControl">
+                                                        <c:ByteImage MaxWidth="{Binding ContentImage.Width,RelativeSource={RelativeSource Mode=Self}}" Source="{TemplateBinding Content}"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ContentControl.Style>
+                        </ContentControl>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

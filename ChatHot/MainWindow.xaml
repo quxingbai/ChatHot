@@ -1,0 +1,14 @@
+﻿<f:ChatFormBasic x:Class="ChatHot.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatHot"
+        mc:Ignorable="d"
+        xmlns:f="clr-namespace:ChatHot.ControlLib.Form;assembly=ChatHot.ControlLib"
+        xmlns:c="clr-namespace:ChatHot.ControlLib.UI;assembly=ChatHot.ControlLib"
+        xmlns:m="clr-namespace:ChatHot.Model;assembly=ChatHot.Model"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+    </Grid>
+</f:ChatFormBasic>

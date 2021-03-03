@@ -1,0 +1,96 @@
+﻿<f:ChatFormBasic x:Class="ChatHot.ChatForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatHot"
+        mc:Ignorable="d"
+        xmlns:f="clr-namespace:ChatHot.ControlLib.Form;assembly=ChatHot.ControlLib"
+        xmlns:c="clr-namespace:ChatHot.ControlLib.UI;assembly=ChatHot.ControlLib"
+        xmlns:cv="clr-namespace:ChatHot.ControlLib.Converters;assembly=ChatHot.ControlLib"
+        xmlns:mm="clr-namespace:ChatHot.Model.EFModels.ChatHotDB;assembly=ChatHot.Model"
+        xmlns:iy="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:is="http://schemas.microsoft.com/expression/2010/interactions"
+        Title="{Binding ElementName=TAB_ChatUsers,Path=SelectedItem.DataContext.Uname}" Height="450" Width="800">
+    <Grid>
+        <Grid.Resources>
+            <ResourceDictionary Source="/ChatHot.ControlLib;component/Themes/QQStyleResource.xaml" />
+        </Grid.Resources>
+        <TabControl TabStripPlacement="Left" Name="TAB_ChatUsers">
+            <TabControl.Style>
+                <Style TargetType="TabControl">
+                    <Style.Resources>
+                        <SolidColorBrush x:Key="TabItem.IsSelected.Foreground" Color="#19000000" />
+                        <SolidColorBrush x:Key="TabItem.IsSelected.LeftBorderBrush" Color="#FF12B7F5" />
+                        <SolidColorBrush x:Key="TabItem.Static.Foreground" Color="Black" />
+                        <SolidColorBrush x:Key="TabItem.IsMouseOver.Foreground" Color="#19000000" />
+                    </Style.Resources>
+                    <Setter Property="FontSize" Value="15"/>
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="BorderThickness" Value="0.4,0,0,0"/>
+                    <Setter Property="BorderBrush" Value="Gray"/>
+                    <Setter Property="ItemContainerStyle">
+                        <Setter.Value>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Width" Value="250"/>
+                                <Setter Property="Margin" Value="-4,-4,0,0"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                <Setter Property="Background" Value="#02000000"/>
+                                <Setter Property="Height" Value="60"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TabItem">
+                                            <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    Background="{TemplateBinding Background}">
+                                                <Border BorderThickness="3.5,0,0,0" x:Name="BD_SelectedBorder" BorderBrush="{x:Null}">
+                                                    <Grid Margin="20,0,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid>
+                                                            <c:UserHeadImage Effect="{x:Null}" Width="41" Height="41" LoginNumber="{Binding UloginNumber}"/>
+                                                        </Grid>
+                                                        <Grid Grid.Column="1" Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid>
+                                                                <TextBlock Text="{Binding Uname}"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="1">
+                                                                <TextBlock Text="{Binding Utag}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource TabItem.IsMouseOver.Foreground}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource TabItem.IsSelected.Foreground}"/>
+                                                    <Setter TargetName="BD_SelectedBorder" Property="BorderBrush" Value="{DynamicResource TabItem.IsSelected.LeftBorderBrush}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                </Style.Triggers>
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Style>
+        </TabControl>
+    </Grid>
+</f:ChatFormBasic>
